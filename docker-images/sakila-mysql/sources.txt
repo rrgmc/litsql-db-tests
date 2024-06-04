@@ -1,0 +1,4 @@
+https://datamastery.gitlab.io/exercises/sakila-queries.html
+
+https://github.com/cantugabriela/Sakila-Queries-MySQL/blob/master/sakila_queries.sql
+

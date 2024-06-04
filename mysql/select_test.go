@@ -1,12 +1,12 @@
-package psql
+package mysql
 
 import (
 	"context"
 	"database/sql"
 	"testing"
 
-	"github.com/rrgmc/litsql/dialect/psql"
-	"github.com/rrgmc/litsql/dialect/psql/sm"
+	"github.com/rrgmc/litsql/dialect/mysql"
+	"github.com/rrgmc/litsql/dialect/mysql/sm"
 	"github.com/rrgmc/litsql/sq"
 	"gotest.tools/v3/assert"
 )
@@ -15,7 +15,7 @@ func TestSelect(t *testing.T) {
 	ctx := context.Background()
 
 	runDBTest(t, ctx, func(db *sql.DB) {
-		query := psql.Select(
+		query := mysql.Select(
 			sm.Columns("film_id", "title", "length"),
 			sm.From("film"),
 			sm.WhereC("length > ?", sq.NamedArg("length")),

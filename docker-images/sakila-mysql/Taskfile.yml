@@ -1,0 +1,18 @@
+version: '3'
+
+tasks:
+  create-db:
+    cmds:
+      - docker build --progress=plain -t ghcr.io/rrgmc/litsql-dbtest-sakila-mysql:latest .
+  docker-push:
+    cmds:
+      - docker buildx build --push --platform linux/amd64,linux/arm64 --progress=plain --tag ghcr.io/rrgmc/litsql-dbtest-sakila-mysql:latest .
+  start-db:
+    cmds:
+      - docker run -d -p 3378:3306 --name litsql-dbtest-sakila-mysql ghcr.io/rrgmc/litsql-dbtest-sakila-mysql:latest
+  logs-db:
+    cmds:
+      - docker logs litsql-dbtest-sakila-mysql
+  stop-db:
+    cmds:
+      - docker stop litsql-dbtest-sakila-mysql
