@@ -2,3 +2,15 @@ https://datamastery.gitlab.io/exercises/sakila-queries.html
 
 https://github.com/cantugabriela/Sakila-Queries-MySQL/blob/master/sakila_queries.sql
 
+https://stackoverflow.com/questions/36146192/nested-select-queries-mysql-sakila-database
+
+https://www.kaggle.com/code/margaretaaprilia/sql-queries-data-visualization-in-sakila-db/notebook
+
+https://jadangpooiling.medium.com/intermediate-advanced-sql-working-with-strings-numbers-dates-5abd76f2b1b0
+
+https://www.devart.com/dbforge/mysql/studio/mysql-window-functions.html
+
+https://medium.com/@yohanesvincentpangestu/demystifying-mysql-subqueries-join-and-window-functions-ac40263b0231
+
+https://stackoverflow.com/questions/67080935/how-can-i-get-the-desired-results-from-the-sakila-database-using-sql
+

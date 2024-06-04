@@ -4,6 +4,9 @@ tasks:
   create-db:
     cmds:
       - docker build --progress=plain -t ghcr.io/rrgmc/litsql-dbtest-sakila-mysql:latest .
+  docker-multiarch-init:
+    cmds:
+      - "docker buildx create --use --name litsql-builder --driver docker-container --config ./buildkitd.toml"
   docker-push:
     cmds:
       - docker buildx build --push --platform linux/amd64,linux/arm64 --progress=plain --tag ghcr.io/rrgmc/litsql-dbtest-sakila-mysql:latest .
