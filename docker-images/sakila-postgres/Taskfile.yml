@@ -6,7 +6,7 @@ tasks:
       - docker build --progress=plain -t ghcr.io/rrgmc/litsql-dbtest-sakila-postgres:latest .
   docker-push:
     cmds:
-      - docker push ghcr.io/rrgmc/litsql-dbtest-sakila-postgres:latest
+      - docker buildx build --push --platform linux/amd64,linux/arm64 --progress=plain --tag ghcr.io/rrgmc/litsql-dbtest-sakila-postgres:latest .
   start-db:
     cmds:
       - docker run -d -p 5478:5432 --name litsql-dbtest-sakila-postgres -e POSTGRES_HOST_AUTH_METHOD=trust ghcr.io/rrgmc/litsql-dbtest-sakila-postgres:latest
