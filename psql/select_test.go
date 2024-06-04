@@ -5,6 +5,7 @@ import (
 	"database/sql"
 	"testing"
 
+	"github.com/rrgmc/litsql-db-tests/utils"
 	"github.com/rrgmc/litsql/dialect/psql"
 	"github.com/rrgmc/litsql/dialect/psql/sm"
 	"github.com/rrgmc/litsql/sq"
@@ -22,29 +23,14 @@ func TestSelect(t *testing.T) {
 			sm.Limit(10),
 		)
 
-		squery, params, err := query.Build()
-		assert.NilError(t, err)
-
-		args, err := sq.ParseArgs(params, map[string]any{
-			"length": 100,
-		})
-		assert.NilError(t, err)
-
-		rows, err := db.QueryContext(ctx, squery, args...)
-		assert.NilError(t, err)
-		defer rows.Close()
-
 		var ct int
 
-		for rows.Next() {
-			var id, length int
-			var title string
-			err := rows.Scan(&id, &title, &length)
-			assert.NilError(t, err)
+		utils.DBExecute(t, db, query, map[string]any{
+			"length": 100,
+		}, func(row map[string]any) {
 			ct++
-		}
+		})
 
-		assert.NilError(t, rows.Err())
 		assert.Equal(t, 10, ct)
 	})
 }
