@@ -6,6 +6,7 @@ import (
 	"log"
 	"testing"
 
+	"github.com/docker/docker/pkg/ioutils"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/testcontainers/testcontainers-go"
 	"github.com/testcontainers/testcontainers-go/modules/mysql"
@@ -13,6 +14,8 @@ import (
 )
 
 func runDBTest(t *testing.T, ctx context.Context, f func(db *sql.DB)) {
+	testcontainers.Logger = log.New(&ioutils.NopWriter{}, "", 0)
+
 	dbName := "sakila"
 	dbUser := "root"
 	dbPassword := "password"

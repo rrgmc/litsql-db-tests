@@ -7,6 +7,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/docker/docker/pkg/ioutils"
 	_ "github.com/jackc/pgx/v5/stdlib"
 	"github.com/testcontainers/testcontainers-go"
 	"github.com/testcontainers/testcontainers-go/modules/postgres"
@@ -15,6 +16,8 @@ import (
 )
 
 func runDBTest(t *testing.T, ctx context.Context, f func(db *sql.DB)) {
+	testcontainers.Logger = log.New(&ioutils.NopWriter{}, "", 0)
+
 	dbName := "sakila"
 	dbUser := "postgres"
 	dbPassword := "password"
