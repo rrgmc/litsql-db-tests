@@ -20,7 +20,8 @@ jobs:
       uses: actions/setup-go@v5
       with:
         go-version: '1.22'
-
+    - name: Log in to registry
+      run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
     - name: Build
       run: go build -v ./...
     - name: Test
