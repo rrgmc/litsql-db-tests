@@ -121,3 +121,54 @@ func TestSakila4(t *testing.T) {
 		assert.Assert(t, ct > 0)
 	})
 }
+
+func TestSakila5(t *testing.T) {
+	ctx := context.Background()
+
+	runDBTest(t, ctx, func(db *sql.DB) {
+		query := mysql.Select(
+			sm.With("cte_src").As(mysql.Select(
+				sm.Columns("*", "ROW_NUMBER() OVER (PARTITION BY email ORDER BY email) AS ROWNUM"),
+				sm.From("customer c"),
+			)),
+			sm.Columns("*"),
+			sm.From("cte_src"),
+			sm.Limit(10),
+		)
+
+		var ct int
+
+		utils.DBExecute(t, db, query, nil,
+			func(row map[string]any) {
+				ct++
+			})
+
+		assert.Assert(t, ct > 0)
+	})
+}
+
+func TestSakila6(t *testing.T) {
+	ctx := context.Background()
+
+	runDBTest(t, ctx, func(db *sql.DB) {
+		query := mysql.Select(
+			sm.Columns("f.film_id", "f.title", "fc.category_id"),
+			sm.From("film f"),
+			sm.LeftJoinE(mysql.Select(
+				sm.Columns("*"),
+				sm.From("film_category"),
+				sm.WhereC("film_id > ?", 3),
+			)).As("fc").On("f.film_id = fc.film_id"),
+			sm.OrderBy("f.film_id"),
+		)
+
+		var ct int
+
+		utils.DBExecute(t, db, query, nil,
+			func(row map[string]any) {
+				ct++
+			})
+
+		assert.Assert(t, ct > 0)
+	})
+}
