@@ -4,7 +4,7 @@ go 1.22.0
 
 require (
 	github.com/jackc/pgx/v5 v5.5.4
-	github.com/rrgmc/litsql v0.6.1
+	github.com/rrgmc/litsql v0.6.2
 	github.com/testcontainers/testcontainers-go v0.31.0
 	github.com/testcontainers/testcontainers-go/modules/postgres v0.31.0
 	gotest.tools/v3 v3.5.1
