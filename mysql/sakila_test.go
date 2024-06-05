@@ -172,3 +172,32 @@ func TestSakila6(t *testing.T) {
 		assert.Assert(t, ct > 0)
 	})
 }
+
+func TestSakila7(t *testing.T) {
+	ctx := context.Background()
+
+	runDBTest(t, ctx, func(db *sql.DB) {
+		query := mysql.Select(
+			sm.Columns("first_name", "last_name"),
+			sm.From("actor"),
+			sm.WhereC("actor_id IN ?", mysql.Select(
+				sm.Columns("actor_id"),
+				sm.From("film_actor"),
+				sm.WhereC("film_id IN ?", mysql.Select(
+					sm.Columns("film_id"),
+					sm.From("film"),
+					sm.WhereC("title = ?", "Alone Trip"),
+				)),
+			)),
+		)
+
+		var ct int
+
+		utils.DBExecute(t, db, query, nil,
+			func(row map[string]any) {
+				ct++
+			})
+
+		assert.Assert(t, ct > 0)
+	})
+}
