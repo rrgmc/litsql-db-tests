@@ -2,6 +2,7 @@ package utils
 
 import (
 	"database/sql"
+	"fmt"
 	"testing"
 
 	"github.com/georgysavva/scany/v2/sqlscan"
@@ -14,7 +15,7 @@ func DBExecute(t *testing.T, db *sql.DB, query sq.BuildQuery, parseArgs map[stri
 	squery, args, err := query.Build()
 	assert.NilError(t, err)
 
-	// fmt.Println(squery)
+	fmt.Println(squery)
 
 	if parseArgs != nil {
 		args, err = sq.ParseArgs(args, map[string]any{

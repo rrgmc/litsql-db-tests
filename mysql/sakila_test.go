@@ -201,3 +201,68 @@ func TestSakila7(t *testing.T) {
 		assert.Assert(t, ct > 0)
 	})
 }
+
+func TestSakila8(t *testing.T) {
+	ctx := context.Background()
+
+	runDBTest(t, ctx, func(db *sql.DB) {
+		query := mysql.Select(
+			sm.With("cte").As(mysql.Select(
+				sm.Columns("film.film_id", "film.title", "COUNT(film_actor.actor_id) AS actor_count"),
+				sm.From("film_actor"),
+				sm.InnerJoin("film").On("film_actor.film_id = film.film_id"),
+				sm.GroupBy("film.film_id", "film.title"),
+			)),
+			sm.Columns("cte.title", "cte.actor_count"),
+			sm.From("cte"),
+			sm.WhereC("cte.actor_count > ?", mysql.Select(
+				sm.Columns("avg(actor_count)"),
+				sm.From("cte"),
+			)),
+			sm.OrderBy("cte.title"),
+			sm.Limit(10),
+		)
+
+		var ct int
+
+		utils.DBExecute(t, db, query, nil,
+			func(row map[string]any) {
+				ct++
+			})
+
+		assert.Assert(t, ct > 0)
+	})
+}
+
+func TestSakila9(t *testing.T) {
+	ctx := context.Background()
+
+	runDBTest(t, ctx, func(db *sql.DB) {
+		query := mysql.Select(
+			sm.With("table1").As(mysql.Select(
+				sm.Columns("f.film_id", "f.title AS \"Film\""),
+				sm.From("film f"),
+			)),
+			sm.With("table2").As(mysql.Select(
+				sm.Columns("COUNT(r.rental_id) rental_count", "i.film_id"),
+				sm.From("inventory i"),
+				sm.InnerJoin("rental r").On("i.inventory_id = r.inventory_id"),
+				sm.GroupBy("i.film_id"),
+			)),
+			sm.Columns("table2.rental_count", "table1.Film"),
+			sm.From("table1"),
+			sm.InnerJoin("table2").On("table1.film_id = table2.film_id"),
+			sm.OrderBy("rental_count DESC"),
+			sm.Limit(10),
+		)
+
+		var ct int
+
+		utils.DBExecute(t, db, query, nil,
+			func(row map[string]any) {
+				ct++
+			})
+
+		assert.Assert(t, ct > 0)
+	})
+}
