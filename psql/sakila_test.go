@@ -20,7 +20,7 @@ func TestSakila1(t *testing.T) {
 			sm.From("inventory"),
 			sm.InnerJoin("store").Using("store_id"),
 			sm.InnerJoin("film").Using("film_id"),
-			sm.WhereC("film.title = ? AND store.store_id = ?", "ACADEMY DINOSAUR", 1),
+			sm.WhereClause("film.title = ? AND store.store_id = ?", "ACADEMY DINOSAUR", 1),
 		)
 
 		var ct int
@@ -44,11 +44,11 @@ func TestSakila2(t *testing.T) {
 			sm.InnerJoin("store").Using("store_id"),
 			sm.InnerJoin("film").Using("film_id"),
 			sm.InnerJoin("rental").Using("inventory_id"),
-			sm.WhereC("film.title = ? AND store.store_id = ?", "ACADEMY DINOSAUR", 1),
-			sm.WhereC("NOT EXISTS ?", psql.Select(
+			sm.WhereClause("film.title = ? AND store.store_id = ?", "ACADEMY DINOSAUR", 1),
+			sm.WhereClause("NOT EXISTS ?", psql.Select(
 				sm.Columns("*"),
 				sm.From("rental"),
-				sm.WhereC("rental.inventory_id = inventory.inventory_id AND rental.return_date IS NULL"),
+				sm.WhereClause("rental.inventory_id = inventory.inventory_id AND rental.return_date IS NULL"),
 			)),
 		)
 
@@ -69,13 +69,13 @@ func TestSakila3(t *testing.T) {
 	runDBTest(t, ctx, func(db *sql.DB) {
 		query := psql.Select(
 			sm.Columns("rental_date"),
-			sm.ColumnsC("rental_date + ? * INTERVAL '1 DAY' AS due_date", psql.Select(
+			sm.ColumnsClause("rental_date + ? * INTERVAL '1 DAY' AS due_date", psql.Select(
 				sm.Columns("rental_duration"),
 				sm.From("film"),
-				sm.WhereC("film_id = ?", 1),
+				sm.WhereClause("film_id = ?", 1),
 			)),
 			sm.From("rental"),
-			sm.WhereC("rental_id = ?", psql.Select(
+			sm.WhereClause("rental_id = ?", psql.Select(
 				sm.Columns("rental_id"),
 				sm.From("rental"),
 				sm.OrderBy("rental_id DESC"),
@@ -104,7 +104,7 @@ func TestSakila4(t *testing.T) {
 			sm.InnerJoin("film_category").Using("film_id"),
 			sm.InnerJoin("category").Using("category_id"),
 			sm.GroupBy("category.name"),
-			sm.HavingC("avg(length) > ?", psql.Select(
+			sm.HavingClause("avg(length) > ?", psql.Select(
 				sm.Columns("avg(length)"),
 				sm.From("film"),
 			)),
@@ -154,10 +154,10 @@ func TestSakila6(t *testing.T) {
 		query := psql.Select(
 			sm.Columns("f.film_id", "f.title", "fc.category_id"),
 			sm.From("film f"),
-			sm.LeftJoinE(psql.Select(
+			sm.LeftJoinExpr(psql.Select(
 				sm.Columns("*"),
 				sm.From("film_category"),
-				sm.WhereC("film_id > ?", 3),
+				sm.WhereClause("film_id > ?", 3),
 			)).As("fc").On("f.film_id = fc.film_id"),
 			sm.OrderBy("f.film_id"),
 		)
@@ -180,13 +180,13 @@ func TestSakila7(t *testing.T) {
 		query := psql.Select(
 			sm.Columns("first_name", "last_name"),
 			sm.From("actor"),
-			sm.WhereC("actor_id IN ?", psql.Select(
+			sm.WhereClause("actor_id IN ?", psql.Select(
 				sm.Columns("actor_id"),
 				sm.From("film_actor"),
-				sm.WhereC("film_id IN ?", psql.Select(
+				sm.WhereClause("film_id IN ?", psql.Select(
 					sm.Columns("film_id"),
 					sm.From("film"),
-					sm.WhereC("title = ?", "ALONE TRIP"),
+					sm.WhereClause("title = ?", "ALONE TRIP"),
 				)),
 			)),
 		)
@@ -215,7 +215,7 @@ func TestSakila8(t *testing.T) {
 			)),
 			sm.Columns("cte.title", "cte.actor_count"),
 			sm.From("cte"),
-			sm.WhereC("cte.actor_count > ?", psql.Select(
+			sm.WhereClause("cte.actor_count > ?", psql.Select(
 				sm.Columns("avg(actor_count)"),
 				sm.From("cte"),
 			)),
