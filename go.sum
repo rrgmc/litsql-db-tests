@@ -104,8 +104,8 @@ github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZb
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/power-devops/perfstat v0.0.0-20210106213030-5aafc221ea8c h1:ncq/mPwQF4JjgDlrVEn3C11VoGHZN7m8qihwgMEtzYw=
 github.com/power-devops/perfstat v0.0.0-20210106213030-5aafc221ea8c/go.mod h1:OmDBASR4679mdNQnz2pUhc2G8CO2JrUAVFDRBDP/hJE=
-github.com/rrgmc/litsql v0.11.0 h1:t+syQUwy8ek2mR/JQqsD+2YJNEm3hCZrEhFz7+sKLu4=
-github.com/rrgmc/litsql v0.11.0/go.mod h1:G6iJMEDPifthsy4C+kwMhlUCRaj8JMzaA0F1avGhH5c=
+github.com/rrgmc/litsql v0.11.8 h1:pWXusQxCcl9l5fN0dJxMbL0hdMPHZJpBP3WLjnOnDes=
+github.com/rrgmc/litsql v0.11.8/go.mod h1:G6iJMEDPifthsy4C+kwMhlUCRaj8JMzaA0F1avGhH5c=
 github.com/shirou/gopsutil/v3 v3.23.12 h1:z90NtUkp3bMtmICZKpC4+WaknU1eXtp5vtbQ11DgpE4=
 github.com/shirou/gopsutil/v3 v3.23.12/go.mod h1:1FrWgea594Jp7qmjHUUPlJDTPgcsb9mGnXDxavtikzM=
 github.com/shoenig/go-m1cpu v0.1.6 h1:nxdKQNcEB6vzgA2E2bvzKIYRuNj7XNJ4S/aRSwKzFtM=
