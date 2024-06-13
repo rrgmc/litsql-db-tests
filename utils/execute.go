@@ -6,7 +6,6 @@ import (
 	"testing"
 
 	"github.com/georgysavva/scany/v2/sqlscan"
-	"github.com/rrgmc/litsql"
 	"github.com/rrgmc/litsql/sq"
 	"gotest.tools/v3/assert"
 )
@@ -19,7 +18,7 @@ func DBExecute(t *testing.T, db *sql.DB, query sq.BuildQuery, parseArgs map[stri
 	fmt.Println(squery)
 
 	if parseArgs != nil {
-		args, err = sq.ParseArgs(args, litsql.MapArgValues{
+		args, err = sq.ParseArgs(args, sq.MapArgValues{
 			"length": 100,
 		})
 		assert.NilError(t, err)
