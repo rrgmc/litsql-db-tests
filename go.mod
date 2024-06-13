@@ -7,7 +7,7 @@ require (
 	github.com/georgysavva/scany/v2 v2.1.3
 	github.com/go-sql-driver/mysql v1.8.1
 	github.com/jackc/pgx/v5 v5.5.4
-	github.com/rrgmc/litsql v0.11.8
+	github.com/rrgmc/litsql v0.20.0
 	github.com/testcontainers/testcontainers-go v0.31.0
 	github.com/testcontainers/testcontainers-go/modules/mysql v0.31.0
 	github.com/testcontainers/testcontainers-go/modules/postgres v0.31.0
